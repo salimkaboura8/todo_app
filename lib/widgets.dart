@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class TaskCardWidget extends StatelessWidget {
   final String title;
   final String desc;
+
   TaskCardWidget({this.title, this.desc});
 
   @override
@@ -42,6 +43,49 @@ class TaskCardWidget extends StatelessWidget {
                 color: Colors.black54,
                 height: 1.5,
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TodoWidget extends StatelessWidget {
+  final String text;
+  final bool isDone;
+
+  TodoWidget({this.text, this.isDone});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 24,
+        vertical: 8,
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 20.0,
+            height: 20.0,
+            margin: EdgeInsets.only(
+              right: 12.0,
+            ),
+            decoration: BoxDecoration(
+              color: isDone ? Colors.blue : Colors.transparent,
+              borderRadius: BorderRadius.circular(8),
+              border: isDone ? null : Border.all(
+                      color: Colors.black,
+                    ),
+            ),
+            child: Image(image: AssetImage('assets/images/check_icon.png')),
+          ),
+          Text(
+            text ?? "Unnamed Todo",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ],

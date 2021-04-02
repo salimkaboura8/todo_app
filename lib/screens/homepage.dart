@@ -21,17 +21,28 @@ class _HomepageState extends State<Homepage> {
               children: [
                 Container(
                   margin: EdgeInsets.only(
+                    top: 32,
                     bottom: 32.0,
                   ),
                   child: Image(
                     image: AssetImage('assets/images/logo.png'),
                   ),
                 ),
-                TaskCardWidget(
-                  title: "Get Started!",
-                  desc: "I'm passing this description from the homepage.dart",
+                Expanded(
+                  child: ListView(
+                    children: [
+                      TaskCardWidget(
+                        title: "Get Started!",
+                        desc: "I'm passing this description from the homepage.dart",
+                      ),
+                      TaskCardWidget(),
+                      TaskCardWidget(),
+                      TaskCardWidget(),
+                      TaskCardWidget(),
+                      TaskCardWidget(),
+                    ],
+                  ),
                 ),
-                TaskCardWidget(),
               ],
             ),
             Positioned(
@@ -42,7 +53,7 @@ class _HomepageState extends State<Homepage> {
                 height: 60,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: Color(0xFF379781),
+                  color: Color(0xFF3FC495),
                 ),
                 child: Image(
                   image: AssetImage(

@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/screens/taskpage.dart';
 import 'package:todo_app/widgets.dart';
 
+import '../database_helper.dart';
+
 class Homepage extends StatefulWidget {
   @override
   _HomepageState createState() => _HomepageState();
 }
 
 class _HomepageState extends State<Homepage> {
+  DatabaseHelper _dbHelper = DatabaseHelper();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,22 +34,24 @@ class _HomepageState extends State<Homepage> {
                   ),
                 ),
                 Expanded(
-                  child: ScrollConfiguration(
-                    behavior: NoGlowBehaviour(),
-                  child: ListView(
-                    children: [
-                      TaskCardWidget(
-                        title: "Get Started!",
-                        desc: "I'm passing this description from the homepage.dart",
-                      ),
-                      TaskCardWidget(),
-                      TaskCardWidget(),
-                      TaskCardWidget(),
-                      TaskCardWidget(),
-                      TaskCardWidget(),
-                    ],
+                  child: FutureBuilder(
+                    initialData: [],
+                    future: _dbHelper.getTasks(),
+                    builder: (context, snapshot) {
+                      return ScrollConfiguration(
+                        behavior: NoGlowBehaviour(),
+                        child: ListView.builder(
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) {
+                            return TaskCardWidget(
+                              title: snapshot.data[index].title,
+                              desc: snapshot.data[index].description,
+                            );
+                          },
+                        ),
+                      );
+                    },
                   ),
-                ),
                 ),
               ],
             ),
@@ -56,10 +62,10 @@ class _HomepageState extends State<Homepage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => Taskpage()
-                    ),
-                  );
+                    MaterialPageRoute(builder: (context) => Taskpage()),
+                  ).then((value) {
+                    setState(() {});
+                  });
                 },
                 child: Container(
                   width: 60,
@@ -67,10 +73,9 @@ class _HomepageState extends State<Homepage> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     gradient: LinearGradient(
-                      colors: [Color(0xFF4CD2B7), Color(0xFF3FC495)],
-                      begin: Alignment(0.0, -1.0),
-                      end: Alignment(0.0, 1.0)
-                    ),
+                        colors: [Color(0xFF4CD2B7), Color(0xFF3FC495)],
+                        begin: Alignment(0.0, -1.0),
+                        end: Alignment(0.0, 1.0)),
                   ),
                   child: Image(
                     image: AssetImage(

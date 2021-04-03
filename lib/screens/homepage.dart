@@ -22,14 +22,16 @@ class _HomepageState extends State<Homepage> {
               children: [
                 Container(
                   margin: EdgeInsets.only(
-                    top: 32,
-                    bottom: 32.0,
+                    top: 25,
+                    bottom: 0,
                   ),
                   child: Image(
                     image: AssetImage('assets/images/logo.png'),
                   ),
                 ),
                 Expanded(
+                  child: ScrollConfiguration(
+                    behavior: NoGlowBehaviour(),
                   child: ListView(
                     children: [
                       TaskCardWidget(
@@ -43,6 +45,7 @@ class _HomepageState extends State<Homepage> {
                       TaskCardWidget(),
                     ],
                   ),
+                ),
                 ),
               ],
             ),
@@ -63,7 +66,11 @@ class _HomepageState extends State<Homepage> {
                   height: 60,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Color(0xFF3FC495),
+                    gradient: LinearGradient(
+                      colors: [Color(0xFF4CD2B7), Color(0xFF3FC495)],
+                      begin: Alignment(0.0, -1.0),
+                      end: Alignment(0.0, 1.0)
+                    ),
                   ),
                   child: Image(
                     image: AssetImage(

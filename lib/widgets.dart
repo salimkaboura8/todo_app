@@ -84,12 +84,21 @@ class TodoWidget extends StatelessWidget {
           Text(
             text ?? "Unnamed Todo",
             style: TextStyle(
-              color: Colors.black,
+              color: isDone ? Colors.black : Colors.black45,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
         ],
       ),
     );
+  }
+}
+
+class NoGlowBehaviour extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
   }
 }

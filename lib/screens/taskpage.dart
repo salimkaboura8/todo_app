@@ -15,13 +15,15 @@ class Taskpage extends StatefulWidget {
 
 class _TaskpageState extends State<Taskpage> {
 
+  DatabaseHelper _dbHelper = DatabaseHelper();
   String _taskTitle = "";
+  int _taskId = 0;
 
   @override
   void initState() {
-
-    if(widget.task != null){
+    if (widget.task != null) {
       _taskTitle = widget.task.title;
+      _taskId = widget.task.id;
     }
 
     super.initState();
@@ -72,7 +74,8 @@ class _TaskpageState extends State<Taskpage> {
                                 }
                               }
                             },
-                            controller: TextEditingController()..text = _taskTitle,
+                            controller: TextEditingController()
+                              ..text = _taskTitle,
                             decoration: InputDecoration(
                               hintText: "Enter Task Title",
                               border: InputBorder.none,
@@ -103,59 +106,72 @@ class _TaskpageState extends State<Taskpage> {
                       ),
                     ),
                   ),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 20.0,
-                              height: 20.0,
-                              margin: EdgeInsets.only(
-                                right: 12.0,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: Colors.black,
-                                ),
-                              ),
-                              child: Image(image: AssetImage('assets/images/check_icon.png')),
+                  FutureBuilder(
+                    initialData: [],
+                    future: _dbHelper.getTodo(_taskId),
+                    builder: (context, snapshot) {
+                      return Expanded(
+                        child: ListView.builder(
+                            itemCount: snapshot.data == null ? 0 : snapshot.data.length,
+                            itemBuilder: (context,index){
+                              return TodoWidget(
+                                text: snapshot.data[index].title,
+                                isDone: snapshot.data[index].isDone == 0 ? false : true,
+                              );
+                            }),
+                      );
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 20.0,
+                          height: 20.0,
+                          margin: EdgeInsets.only(
+                            right: 12.0,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: Colors.black,
                             ),
-                            Expanded(
-                              child: TextField(
-                                onSubmitted: (value) async {
-                                  //Check if the field is not empty
-                                  if (value != "") {
-                                    //Check if the task is not null
-                                    if (widget.task != null) {
-                                      DatabaseHelper _dbHelper = DatabaseHelper();
-                                      Todo _newTodo = Todo(
-                                        title: value,
-                                        isDone: 0,
-                                        taskId: widget.task.id
-                                      );
-                                      await _dbHelper.insertTodo(_newTodo);
-                                      print("Created a new todo");
-                                    } else {
-                                      print("task is null");
-                                    }
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                  hintText: "Enter ToDo item...",
-                                  border: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
+                          child: Image(image: AssetImage(
+                              'assets/images/check_icon.png')),
                         ),
-                      )
-                    ],
+                        Expanded(
+                          child: TextField(
+                            onSubmitted: (value) async {
+                              //Check if the field is not empty
+                              if (value != "") {
+                                //Check if the task is not null
+                                if (widget.task != null) {
+                                  Todo _newTodo = Todo(
+                                      title: value,
+                                      isDone: 0,
+                                      taskId: widget.task.id,
+                                  );
+                                  await _dbHelper.insertTodo(_newTodo);
+                                  setState(() {});
+                                  print("Created a new todo");
+                                } else {
+                                  print("task is null");
+                                }
+                              }
+                            },
+                            decoration: InputDecoration(
+                              hintText: "Enter ToDo item...",
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),

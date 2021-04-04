@@ -7,10 +7,10 @@ class Todo {
 
   Map<String, dynamic> toMap() {
     return {
-      'id' : id,
-      'taskId' : taskId,
-      'title' : title,
-      'isDone' : isDone,
+      'id': id,
+      'taskId': taskId,
+      'title': title,
+      'isDone': isDone,
     };
   }
 }

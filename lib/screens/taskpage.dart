@@ -217,11 +217,11 @@ class _TaskpageState extends State<Taskpage> {
                                 //Check if the field is not empty
                                 if (value != "") {
                                   //Check if the task is not null
-                                  if (widget.task != null) {
+                                  if (_taskId != 0) {
                                     Todo _newTodo = Todo(
                                       title: value,
                                       isDone: 0,
-                                      taskId: widget.task.id,
+                                      taskId: _taskId,
                                     );
                                     await _dbHelper.insertTodo(_newTodo);
                                     setState(() {});
@@ -251,10 +251,10 @@ class _TaskpageState extends State<Taskpage> {
                   right: 10.0,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Taskpage()),
-                      );
+                      if(_taskId!=0){
+                        _dbHelper.deleteTask(_taskId);
+                        Navigator.pop(context);
+                      }
                     },
                     child: Container(
                       width: 60,

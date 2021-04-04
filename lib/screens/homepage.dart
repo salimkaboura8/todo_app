@@ -45,11 +45,15 @@ class _HomepageState extends State<Homepage> {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => Taskpage(
-                                    task: snapshot.data[index],
-                                  )),
-                                );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Taskpage(
+                                            task: snapshot.data[index],
+                                          )),
+                                ).then((value) {
+                                  setState(() {});
+                                });
                               },
                               child: TaskCardWidget(
                                 title: snapshot.data[index].title,
@@ -71,7 +75,10 @@ class _HomepageState extends State<Homepage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Taskpage(task: null,)),
+                    MaterialPageRoute(
+                        builder: (context) => Taskpage(
+                              task: null,
+                            )),
                   ).then((value) {
                     setState(() {});
                   });

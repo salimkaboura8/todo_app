@@ -89,7 +89,7 @@ class _HomepageState extends State<Homepage> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     gradient: LinearGradient(
-                        colors: [Color(0xFF4CD2B7), Color(0xFF3FC495)],
+                        colors: [Color(0xFF68A0DE), Color(0xFF3878AA)],
                         begin: Alignment(0.0, -1.0),
                         end: Alignment(0.0, 1.0)),
                   ),

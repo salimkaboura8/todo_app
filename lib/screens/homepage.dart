@@ -22,7 +22,7 @@ class _HomepageState extends State<Homepage> {
         child: Stack(
           children: [
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
                   margin: EdgeInsets.only(
@@ -30,6 +30,7 @@ class _HomepageState extends State<Homepage> {
                     bottom: 0,
                   ),
                   child: Image(
+                    width: 50.0,
                     image: AssetImage('assets/images/logo.png'),
                   ),
                 ),

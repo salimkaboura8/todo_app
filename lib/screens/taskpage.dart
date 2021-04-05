@@ -74,6 +74,7 @@ class _TaskpageState extends State<Taskpage> {
                           child: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Image(
+                              width: 25.0,
                               image: AssetImage(
                                   'assets/images/back_arrow_icon.png'),
                             ),
@@ -81,6 +82,7 @@ class _TaskpageState extends State<Taskpage> {
                         ),
                         Expanded(
                           child: TextField(
+                            textCapitalization: TextCapitalization.sentences,
                             focusNode: _titleFocus,
                             onSubmitted: (value) async {
                               //Check if the field is not empty
@@ -130,6 +132,7 @@ class _TaskpageState extends State<Taskpage> {
                           bottom: 12.0,
                         ),
                         child: TextField(
+                          textCapitalization: TextCapitalization.sentences,
                           focusNode: _descriptionFocus,
                           onSubmitted: (value) {
                             if (value != "") {
@@ -206,11 +209,14 @@ class _TaskpageState extends State<Taskpage> {
                                 color: Colors.black,
                               ),
                             ),
-                            child: Image(image: AssetImage(
+                            child: Image(
+                                color: Colors.transparent,
+                                image: AssetImage(
                                 'assets/images/check_icon.png')),
                           ),
                           Expanded(
                             child: TextField(
+                              textCapitalization: TextCapitalization.sentences,
                               focusNode: _todoFocus,
                               controller: TextEditingController()..text = "",
                               onSubmitted: (value) async {
@@ -263,9 +269,12 @@ class _TaskpageState extends State<Taskpage> {
                         borderRadius: BorderRadius.circular(20),
                         color: Color(0xFFDC66AD),
                       ),
-                      child: Image(
-                        image: AssetImage(
-                          'assets/images/delete_icon.png',
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Image(
+                          image: AssetImage(
+                            'assets/images/delete_icon.png',
+                          ),
                         ),
                       ),
                     ),
